@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Universities</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-4">
+
+    <h2 class="mb-3">Universities</h2>
+
+    <!-- COUNTRY FILTER -->
+    <form method="GET" action="{{ url_for('universities') }}" class="mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <select name="country" class="form-select">
+                    <option value="">All Countries</option>
+                    {% for country in countries %}
+                        <option value="{{ country }}"
+                            {% if country == selected_country %}selected{% endif %}>
+                            {{ country }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- UNIVERSITIES LIST -->
+    <div class="list-group">
+        {% for uni in universities %}
+            <a href="{{ url_for('university_detail', uni_id=uni.id) }}"
+               class="list-group-item list-group-item-action">
+                <strong>{{ uni.name }}</strong><br>
+                {{ uni.country }} – {{ uni.city }}
+            </a>
+        {% else %}
+            <p>No universities found.</p>
+        {% endfor %}
+    </div>
+
+</div>
+
+</body>
+</html>

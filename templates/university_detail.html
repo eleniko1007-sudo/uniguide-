@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ university.name }} – UniGuide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #FFF8F0;
+            font-family: 'Roboto', sans-serif;
+            color: #4B3F36;
+        }
+
+        .navbar { background-color: #FFFDF8; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 30px; }
+        .navbar-brand { font-family: 'Playfair Display', serif; color: #A06B4D; font-weight: 600; }
+        .navbar-nav .nav-link { color: #CFA77F !important; transition: color 0.3s, transform 0.2s; }
+        .navbar-nav .nav-link:hover { color: #B98660 !important; transform: scale(1.05); }
+
+        .hero { background: linear-gradient(135deg, #FFEAD5, #FFF2E0); border-radius: 16px; padding: 25px 20px; text-align: center; margin-bottom: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 5px; color: #A06B4D; }
+        .hero p { font-size: 1rem; color: #6D5C50; }
+
+        .info-card { background-color: #FFFDF8; border-radius: 14px; padding: 18px; box-shadow: 0 6px 18px rgba(0,0,0,0.08); margin-bottom: 20px; }
+        .info-card h5 { font-weight: 600; color: #A06B4D; margin-bottom: 10px; }
+        .info-card p { color: #6D5C50; }
+
+        .back-btn { text-decoration: none; color: #CFA77F; font-weight: 600; transition: color 0.3s, transform 0.2s; }
+        .back-btn:hover { color: #B98660; transform: scale(1.05); text-decoration: underline; }
+
+        .apply-btn { background-color: #CFA77F; color: white; border: none; border-radius: 50px; padding: 8px 20px; font-weight: 600; transition: background-color 0.3s, transform 0.2s; display: inline-block; margin-top: 10px; }
+        .apply-btn:hover { background-color: #B98660; transform: scale(1.05); color: white; }
+
+        footer { margin-top: 50px; padding: 25px 0; text-align: center; font-size: 0.9rem; color: #6D5C50; border-top: 1px solid #E6D8C8; }
+        footer a { color: #CFA77F; text-decoration: none; margin: 0 6px; }
+        footer a:hover { text-decoration: underline; }
+
+        .official-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 18px;
+            border-radius: 30px;
+            background-color: #FFF2E0;
+            color: #A06B4D;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .official-link:hover {
+            background-color: #CFA77F;
+            color: white;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">UniGuide</a>
+            <div class="collapse navbar-collapse justify-content-end">
+                <ul class="navbar-nav">
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- BACK BUTTON -->
+    <a href="{{ url_for('home') }}" class="back-btn mb-3 d-inline-block">← Back to Universities</a>
+
+    <!-- HERO -->
+    <div class="hero">
+        <h1>{{ university.name }}</h1>
+        <p>📍 {{ university.city }}, {{ university.country }}</p>
+    </div>
+
+    <!-- INFO GRID -->
+    <div class="row text-center mb-4">
+        <div class="col-md-3"><div class="info-card">🎓 <strong>{{ university.faculties }}</strong></div></div>
+        <div class="col-md-3"><div class="info-card">💰 <strong>{{ university.tuition_fee }}</strong></div></div>
+        <div class="col-md-3"><div class="info-card">🗓 <strong>{{ university.application_start }}</strong></div></div>
+        <div class="col-md-3"><div class="info-card">📍 <strong>{{ university.country }}</strong></div></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="info-card">
+                <h5>📄 Required Documents</h5>
+                <p>{{ university.documents }}</p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="info-card">
+                <h5>🕒 Study Duration</h5>
+                <p>3–4 years (Bachelor)</p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="info-card">
+                <h5>🌍 Language of Instruction</h5>
+                <p>English</p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="info-card">
+                <h5>🏠 Accommodation</h5>
+                <p>Available for international students</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- OFFICIAL WEBSITE -->
+    <div class="info-card text-center">
+        <h5>🌐 Official Website</h5>
+{% if university.website %}
+    <a href="{{ university.website }}" target="_blank" class="official-link">
+        Visit {{ university.name }} Website →
+    </a>
+{% endif %}
+
+    </div>
+
+    <!-- APPLY BUTTON -->
+    <button type="button" class="apply-btn" data-bs-toggle="modal" data-bs-target="#applyModal">Apply Now</button>
+
+    <!-- APPLY MODAL -->
+    <div class="modal fade" id="applyModal" tabindex="-1" aria-labelledby="applyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg rounded-4 border-0">
+                <form method="POST" action="{{ url_for('apply', uni_id=university.id) }}">
+                    <div class="modal-header" style="background-color: #FFF2E0; border-bottom: 1px solid #E6D8C8; border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+                        <h5 class="modal-title" id="applyModalLabel" style="font-family: 'Playfair Display', serif; color:#A06B4D;">Apply to {{ university.name }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="background-color: #FFFDF8;">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control shadow-sm rounded-3" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control shadow-sm rounded-3" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control shadow-sm rounded-3" id="message" name="message" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="background-color: #FFFDF8; border-top: 1px solid #E6D8C8;">
+                        <button type="submit" class="apply-btn" style="width:100%; font-size:1rem;">Submit Application</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2026 UniGuide | <a href="#">About</a> | <a href="#">Contact</a> | <a href="#">Privacy</a>
+    </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UniGuide – Find Your University</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #FFF8F0;
+            font-family: 'Roboto', sans-serif;
+            color: #4B3F36;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background-color: #FFFDF8;
+            border-radius: 14px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            margin-top: 20px;
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            color: #A06B4D;
+            font-weight: 600;
+            font-size: 1.6rem;
+        }
+
+        .nav-link {
+            color: #CFA77F !important;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #B98660 !important;
+        }
+
+        /* HERO */
+        .hero {
+            margin-top: 80px;
+            background: linear-gradient(135deg, #FFEAD5, #FFF2E0);
+            border-radius: 22px;
+            padding: 60px 30px;
+            text-align: center;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            color: #A06B4D;
+            font-size: 2.6rem;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #6D5C50;
+            max-width: 650px;
+            margin: 0 auto 30px;
+        }
+
+        /* BUTTON */
+        .main-btn {
+            background-color: #CFA77F;
+            color: white;
+            border-radius: 50px;
+            padding: 12px 32px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .main-btn:hover {
+            background-color: #B98660;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 90px;
+            padding: 25px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6D5C50;
+            border-top: 1px solid #E6D8C8;
+        }
+
+        footer a {
+            color: #CFA77F;
+            text-decoration: none;
+            margin: 0 6px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg px-4">
+        <a class="navbar-brand" href="{{ url_for('landing') }}">UniGuide</a>
+        <div class="ms-auto">
+            <a class="nav-link d-inline" href="{{ url_for('login') }}">Login</a>
+            <a class="nav-link d-inline" href="{{ url_for('register') }}">Register</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <div class="hero">
+        <h1>Find Your Perfect University</h1>
+        <p>
+            UniGuide helps you explore top European universities,
+            compare programs, and apply — all in one place.
+        </p>
+
+        <a href="{{ url_for('home') }}" class="main-btn">
+            Explore Universities
+        </a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2026 UniGuide |
+        <a href="#">About</a> |
+        <a href="#">Contact</a> |
+        <a href="#">Privacy</a>
+    </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

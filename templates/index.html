@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="get">
+    <input type="text" name="country" placeholder="Country" value="{{ country_filter }}">
+    <input type="text" name="faculty" placeholder="Faculty" value="{{ faculty_filter }}">
+    <button type="submit">Search</button>
+</form>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Country</th>
+        <th>City</th>
+        <th>Faculties</th>
+        <th>Details</th>
+    </tr>
+    {% for uni in universities %}
+    <tr>
+        <td>{{ uni.name }}</td>
+        <td>{{ uni.country }}</td>
+        <td>{{ uni.city }}</td>
+        <td>{{ uni.faculties }}</td>
+        <td><a href="{{ url_for('university_detail', uni_id=uni.id) }}">View</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

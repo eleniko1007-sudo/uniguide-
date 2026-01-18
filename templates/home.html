@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>European Universities – UniGuide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #FFF8F0; /* soft cream */
+            font-family: 'Roboto', sans-serif;
+            color: #4B3F36; /* dark chocolate */
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background-color: #FFFDF8;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            color: #A06B4D;
+            font-weight: 600;
+        }
+
+        .navbar-nav .nav-link {
+            color: #CFA77F !important;
+            transition: color 0.3s, transform 0.2s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #B98660 !important;
+            transform: scale(1.05);
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #FFEAD5, #FFF2E0);
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 8px;
+            color: #A06B4D;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            color: #6D5C50;
+        }
+
+        /* FILTERS */
+        .form-select {
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        /* UNIVERSITY CARDS */
+        .card {
+            border-radius: 14px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+        }
+
+        .card-body {
+            background-color: #FFFDF8;
+            padding: 18px;
+        }
+
+        .card-title {
+            color: #A06B4D;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .card-text b {
+            color: #6D5C50;
+        }
+
+        .card-text span {
+            color: #A07F5C; /* subtle accent for info */
+        }
+
+        /* VIEW BUTTON */
+        .view-btn {
+            background-color: #CFA77F; /* soft accent */
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 6px 16px;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.2s;
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 6px;
+        }
+
+        .view-btn:hover {
+            background-color: #B98660;
+            transform: scale(1.03);
+            color: white;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 50px;
+            padding: 25px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6D5C50;
+            border-top: 1px solid #E6D8C8;
+        }
+
+        footer a {
+            color: #CFA77F;
+            text-decoration: none;
+            margin: 0 6px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">UniGuide</a>
+            <div class="collapse navbar-collapse justify-content-end">
+                <ul class="navbar-nav">
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+        <h1>Explore European Universities</h1>
+        <p>Compare faculties, tuition, and application dates</p>
+    </div>
+
+    <!-- FILTERS -->
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-6">
+            <select name="country" class="form-select" onchange="this.form.submit()">
+                <option value="">All Countries</option>
+                {% for c in countries %}
+                    <option value="{{ c }}" {% if c == selected_country %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <select name="faculty" class="form-select" onchange="this.form.submit()">
+                <option value="">All Faculties</option>
+                {% for f in faculties %}
+                    <option value="{{ f }}" {% if f == selected_faculty %}selected{% endif %}>{{ f }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+
+    <!-- UNIVERSITY CARDS -->
+    <div class="row g-4">
+        {% for uni in universities %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ uni.name }}</h5>
+                    <p class="card-text">
+                        <b>City:</b> <span>{{ uni.city }}</span><br>
+                        <b>Country:</b> <span>{{ uni.country }}</span><br>
+                        <b>Faculties:</b> <span>{{ uni.faculties }}</span><br>
+                        <b>Start:</b> <span>{{ uni.application_start }}</span><br>
+                        <b>Tuition:</b> <span>{{ uni.tuition_fee }}</span>
+                    </p>
+                    <a href="{{ url_for('university_detail', uni_id=uni.id) }}" class="view-btn">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <p class="text-muted">No universities found.</p>
+        {% endfor %}
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2026 UniGuide | <a href="#">About</a> | <a href="#">Contact</a> | <a href="#">Privacy</a>
+    </footer>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.card .btn-outline-warning {
+    transition: all 0.3s ease;
+}
+
+.card .btn-outline-warning:hover {
+    background-color: #ffc107;
+    color: white;
+}
